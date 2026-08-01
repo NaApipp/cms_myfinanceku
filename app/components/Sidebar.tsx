@@ -30,7 +30,7 @@ export default function SidebarAdmin() {
   const handleLogout = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const sessionUser = sessionStorage.getItem("user");
+      const sessionUser = sessionStorage.getItem("user-admin");
       let token = "";
       if (sessionUser) {
         try {
@@ -48,8 +48,8 @@ export default function SidebarAdmin() {
     } catch (error) {
       console.error("Logout error:", error);
     } finally {
-      sessionStorage.removeItem("user");
-      window.location.href = "/login-admin";
+      sessionStorage.removeItem("user-admin");
+      window.location.href = "/login";
     }
   };Link
 
