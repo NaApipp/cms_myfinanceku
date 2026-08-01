@@ -178,7 +178,7 @@ export async function GET(request: Request) {
     // 3. Parse query params
     const { searchParams } = new URL(request.url);
     const page = Math.max(1, parseInt(searchParams.get("page") || "1"));
-    const limit = Math.min(100, parseInt(searchParams.get("limit") || "10")); // cap max limit
+    const limit = Math.min(100, parseInt(searchParams.get("limit") || "12")); // cap max limit
     const search = searchParams.get("search")?.trim() || "";
     const sortBy = searchParams.get("sortBy") || "createdAt";
     const sortOrder = searchParams.get("sortOrder") === "asc" ? 1 : -1;
