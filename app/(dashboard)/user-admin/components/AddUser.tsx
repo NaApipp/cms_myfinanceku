@@ -69,120 +69,110 @@ export default function AddUser() {
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
   return (
-    <div className="flex items-center justify-center">
-      <div className="relative py-3 sm:max-w-xs sm:mx-auto">
-        <form onSubmit={handleAddUser} className="min-h-96 px-8 py-6 mt-4 text-left bg-white dark:bg-gray-900 rounded-xl shadow-lg">
-          <div className="flex flex-col justify-center items-center h-full select-none">
-            <div className="flex flex-col items-center justify-center gap-2 mb-8">
-              <img src="https://myfinanceku.vercel.app/icon/logo.png" alt="Logo" width={50} height={50} />
-              <p className="m-0 text-[16px] font-semibold dark:text-white">
-                Tambah User Admin
-              </p>
-              <span className="m-0 text-xs max-w-[90%] text-center text-[#8B8E98]">
-                Masukan data - data user admin yang ingin ditambahkan
-              </span>
-            </div>
-            {/* form data */}
-            
-            {/* Username */}
-            <div className="w-full flex flex-col gap-2 mb-5">
-              <label className="font-semibold text-xs text-gray-400">
-                Username
-              </label>
-              <input
-                value={formData.username}
-                onChange={(e) =>
-                  setFormData({ ...formData, username: e.target.value })
-                }
-                placeholder="Username"
-                className="border rounded-lg px-3 py-2 text-sm w-full outline-none dark:border-gray-500 dark:bg-gray-900"
-              />
-            </div>
-
-            {/* Email */}
-            <div className="w-full flex flex-col gap-2 mb-5">
-              <label className="font-semibold text-xs text-gray-400">
-                Email
-              </label>
-              <input
-                type="email"
-                value={formData.email}
-                onChange={(e) =>
-                  setFormData({ ...formData, email: e.target.value })
-                }
-                placeholder="Email"
-                className="border rounded-lg px-3 py-2 text-sm w-full outline-none dark:border-gray-500 dark:bg-gray-900"
-              />
-            </div>
-            
-            {/* platform role */}
-            <div className="w-full flex flex-col gap-2 mb-5">
-              <label className="font-semibold text-xs text-gray-400">
-                Platform Role
-              </label>
-              <select
-                value={formData.platform_role}
-                onChange={(e) =>
-                  setFormData({ ...formData, platform_role: e.target.value })
-                }
-                className="border rounded-lg px-3 py-2 text-sm w-full outline-none dark:border-gray-500 dark:bg-gray-900"
-              >
-                <option value="">Select Platform Role</option>
-                <option value="admin_cms">Admin CMS</option>
-                <option value="admin_finpay">Admin Finpay</option>
-              </select>
-            </div>
-
-            {/* Password */}
-            <div className="w-full flex flex-col gap-2 mb-5">
-              <label className="font-semibold text-xs text-gray-400">
-                Password
-              </label>
-              <div className="relative">
-                <input
-                  value={formData.password}
-                  onChange={(e) =>
-                    setFormData({ ...formData, password: e.target.value })
-                  }
-                  placeholder="••••••••"
-                  type={showPassword ? "text" : "password"}
-                  required
-                  className="border rounded-lg px-3 py-2 text-sm w-full outline-none dark:border-gray-500 dark:bg-gray-900"
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors focus:outline-none"
-                >
-                  {showPassword ? (
-                    <EyeOff className="w-5 h-5" />
-                  ) : (
-                    <Eye className="w-5 h-5" />
-                  )}
-                </button>
-              </div>
-            </div>
-          </div>
-
-          {message && (
-            <div className={`mb-4 text-xs font-medium ${
-              message.type === 'success' ? 'text-green-500' : 'text-red-500'
-            }`}>
-              {message.text}
-            </div>
-          )}
-
-          <button
-            type="submit"
-            disabled={loading}
-            className="py-2 px-8 bg-blue-500 hover:bg-blue-800 focus:ring-offset-blue-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg cursor-pointer select-none disabled:opacity-50"
-          >
-            {loading ? "Memproses..." : "Tambah User Admin"}
-          </button>
-
-          
-        </form>
+    <form onSubmit={handleAddUser} className="form-card">
+      <div className="flex flex-col items-center justify-center gap-2 mb-6 text-center">
+        <img src="https://myfinanceku.vercel.app/icon/logo.png" alt="Logo" width={40} height={40} />
+        <h2 className="form-title" style={{ border: "none", marginBottom: 0, paddingBottom: 0 }}>Tambah User Admin</h2>
+        <span style={{ fontSize: ".75rem", color: "var(--ink-soft)" }}>
+          Masukkan data user admin yang ingin ditambahkan
+        </span>
       </div>
-    </div>
+      
+      {/* Username */}
+      <div className="field-group">
+        <label className="field-label">Username</label>
+        <input
+          value={formData.username}
+          onChange={(e) =>
+            setFormData({ ...formData, username: e.target.value })
+          }
+          placeholder="Username"
+          className="input-field"
+          required
+        />
+      </div>
+
+      {/* Email */}
+      <div className="field-group">
+        <label className="field-label">Email</label>
+        <input
+          type="email"
+          value={formData.email}
+          onChange={(e) =>
+            setFormData({ ...formData, email: e.target.value })
+          }
+          placeholder="email@example.com"
+          className="input-field"
+          required
+        />
+      </div>
+      
+      {/* platform role */}
+      <div className="field-group">
+        <label className="field-label">Platform Role</label>
+        <select
+          value={formData.platform_role}
+          onChange={(e) =>
+            setFormData({ ...formData, platform_role: e.target.value })
+          }
+          className="input-field"
+          required
+        >
+          <option value="">Select Platform Role</option>
+          <option value="admin_cms">Admin CMS</option>
+          <option value="admin_finpay">Admin Finpay</option>
+        </select>
+      </div>
+
+      {/* Password */}
+      <div className="field-group" style={{ marginBottom: "1.5rem" }}>
+        <label className="field-label">Password</label>
+        <div className="relative">
+          <input
+            value={formData.password}
+            onChange={(e) =>
+              setFormData({ ...formData, password: e.target.value })
+            }
+            placeholder="••••••••"
+            type={showPassword ? "text" : "password"}
+            required
+            className="input-field"
+            style={{ paddingRight: "2.5rem" }}
+          />
+          <button
+            type="button"
+            onClick={() => setShowPassword(!showPassword)}
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors focus:outline-none"
+            style={{ border: "none", background: "none", cursor: "pointer" }}
+          >
+            {showPassword ? (
+              <EyeOff className="w-4 h-4" />
+            ) : (
+              <Eye className="w-4 h-4" />
+            )}
+          </button>
+        </div>
+      </div>
+
+      {message && (
+        <div className="error-box" style={{ 
+          borderColor: message.type === "success" ? "var(--ledger)" : "var(--rust)",
+          color: message.type === "success" ? "var(--ledger)" : "var(--rust)",
+          marginBottom: "1rem",
+          fontSize: ".75rem",
+          padding: ".6rem"
+        }}>
+          {message.text}
+        </div>
+      )}
+
+      <button
+        type="submit"
+        disabled={loading}
+        className="btn btn-fill"
+      >
+        {loading ? "Memproses..." : "Tambah User Admin"}
+      </button>
+    </form>
   );
 }

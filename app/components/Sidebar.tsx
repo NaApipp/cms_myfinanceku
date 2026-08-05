@@ -1,26 +1,15 @@
 "use client";
 
 import {
-  Wallet,
-  ClockFading,
-  ChartPie,
-  Target,
-  Settings,
   House,
-  Plus,
-  SquareArrowRightExit,
-  User,
-  Mail,
   Newspaper,
   Mails,
+  User,
+  SquareArrowRightExit,
 } from "lucide-react";
 import Link from "next/link";
-
 import { useRouter } from "next/navigation";
-
 import { usePathname } from "next/navigation";
-
-import Image from "next/image";
 
 export default function SidebarAdmin() {
   const router = useRouter();
@@ -51,88 +40,192 @@ export default function SidebarAdmin() {
       sessionStorage.removeItem("user-admin");
       window.location.href = "/login";
     }
-  };Link
+  };
 
-  // Path Active Logic
-  const getPathActive = (href: string) => {
-    const isActive = pathname === href;
-    return `flex items-center gap-2 rounded-lg px-4 py-2 transition-all  ${
-      isActive
-        ? "text-black dark:text-white bg-transparent font-bold"
-        : "text-gray-500 dark:text-gray-400 hover:bg-black dark:hover:bg-white hover:text-white dark:hover:text-black font-bold"
-    }`;
+  const isLinkActive = (href: string) => {
+    return pathname === href.trim();
   };
 
   return (
-    <div className="hidden lg:flex h-screen w-64 flex-col justify-between border-e bg-[#FAFAFA] dark:bg-neutral-950 border-gray-200 dark:border-white/5 transition-colors duration-300">
-      <div className="px-4 py-6">
-        <Link
-          href="/dashboard"
-          className="flex items-center gap-2 ml-4 text-gray-700 dark:text-gray-200"
-        >
-          <img
-            src="https://myfinanceku.vercel.app/icon/logo.png"
-            alt="Logo"
-            width={30}
-            height={30}
-          />
-          <p className="font-semibold text-black dark:text-white text-[13px]">
-            MyFinanceKu{" "}
-            <span className="text-blue-600 dark:text-blue-400">CMS</span>
-          </p>
-        </Link>
+    <>
+      <style>{`
+        :root {
+            --paper: #f6f4ee;
+            --paper-raised: #fdfcf9;
+            --ink: #1c1b17;
+            --ink-soft: #6b6558;
+            --rule: #ddd7c8;
+            --ledger: #2f4a3c;
+            --ledger-soft: #e4ebe6;
+            --amber: #a97a2f;
+            --rust: #a1432a;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --paper: #161511;
+                --paper-raised: #1d1c17;
+                --ink: #ece7db;
+                --ink-soft: #948d7c;
+                --rule: #34322a;
+                --ledger: #7fa88e;
+                --ledger-soft: #202821;
+                --amber: #d1a35c;
+                --rust: #d97b5f;
+            }
+        }
 
-        <ul className="mt-6 space-y-1">
-            {/* Route CMS */}
-          <li>
-            <Link href="/dashboard" className={getPathActive("/dashboard")}>
-              <House />
-              <span className="text-sm font-medium"> Dashboard </span>
-            </Link>
-          </li>
+        .sb-root {
+            display: none;
+            height: 100vh;
+            width: 16rem;
+            flex-direction: column;
+            justify-content: space-between;
+            border-right: 2px solid var(--ink);
+            background: var(--paper-raised);
+            color: var(--ink);
+            font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+            flex-shrink: 0;
+        }
+        @media (min-width: 1024px) {
+            .sb-root {
+                display: flex;
+            }
+        }
+        .sb-header {
+            padding: 1.5rem 1rem;
+        }
+        .sb-brand {
+            display: flex;
+            align-items: center;
+            gap: .5rem;
+            text-decoration: none;
+            color: var(--ink);
+            margin-bottom: 2rem;
+        }
+        .sb-brand-text {
+            font-size: .85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: .05em;
+            margin: 0;
+        }
+        .sb-brand-text .accent {
+            color: var(--ledger);
+        }
+        .sb-nav-list {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: .35rem;
+        }
+        .sb-link {
+            display: flex;
+            align-items: center;
+            gap: .75rem;
+            padding: .65rem 1rem;
+            text-decoration: none;
+            font-size: .85rem;
+            font-weight: 500;
+            color: var(--ink-soft);
+            border-left: 3px solid transparent;
+            transition: all .15s;
+        }
+        .sb-link svg {
+            width: 16px;
+            height: 16px;
+            flex-shrink: 0;
+        }
+        .sb-link:hover {
+            background: var(--ledger-soft);
+            color: var(--ink);
+        }
+        .sb-link.active {
+            color: var(--ink);
+            background: var(--ledger-soft);
+            border-left-color: var(--ledger);
+            font-weight: 600;
+        }
+        .sb-footer {
+            border-top: 1px solid var(--rule);
+            background: var(--paper-raised);
+            padding: 1rem;
+        }
+        .btn-logout {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: .5rem;
+            width: 100%;
+            padding: .6rem 1rem;
+            font-size: .8rem;
+            font-weight: 600;
+            border: 1px solid var(--ink);
+            background: var(--ink);
+            color: var(--paper-raised);
+            cursor: pointer;
+            transition: background .15s, color .15s;
+        }
+        .btn-logout:hover {
+            background: transparent;
+            color: var(--ink);
+        }
+      `}</style>
+      <div className="sb-root">
+        <div className="sb-header">
+          <Link href="/dashboard" className="sb-brand">
+            <img
+              src="https://myfinanceku.vercel.app/icon/logo.png"
+              alt="Logo"
+              width={26}
+              height={26}
+            />
+            <p className="sb-brand-text">
+              MyFinanceKu <span className="accent">CMS</span>
+            </p>
+          </Link>
 
-            {/* Route CMS */}
-          <li>
-            <Link href="/berita " className={getPathActive("/berita ")}>
-              <Newspaper />
-              <span className="text-sm font-medium"> Tambah Berita </span>
-            </Link>
-          </li>
+          <ul className="sb-nav-list">
+            <li>
+              <Link href="/dashboard" className={`sb-link${isLinkActive("/dashboard") ? " active" : ""}`}>
+                <House />
+                <span>Dashboard</span>
+              </Link>
+            </li>
 
-            {/* Route CMS */}
-          <li>
-            <Link href="/data-berita" className={getPathActive("/data-berita")}>
-              <Mails />
-              <span className="text-sm font-medium"> Data Berita </span>
-            </Link>
-          </li>
+            <li>
+              <Link href="/berita" className={`sb-link${isLinkActive("/berita") ? " active" : ""}`}>
+                <Newspaper />
+                <span>Tambah Berita</span>
+              </Link>
+            </li>
 
-          
-          
-          
-          
-          <li>
-            <Link href="/user-admin" className={getPathActive("/user-admin")}>
-              <User className="text-red-500" />
-              <span className="text-sm font-medium"> User Admin </span>
-            </Link>
-          </li>
-        </ul>
+            <li>
+              <Link href="/data-berita" className={`sb-link${isLinkActive("/data-berita") ? " active" : ""}`}>
+                <Mails />
+                <span>Data Berita</span>
+              </Link>
+            </li>
+
+            <li>
+              <Link href="/user-admin" className={`sb-link${isLinkActive("/user-admin") ? " active" : ""}`}>
+                <User />
+                <span>User Admin</span>
+              </Link>
+            </li>
+          </ul>
+        </div>
+
+        <div className="sb-footer">
+          <form onSubmit={handleLogout}>
+            <button type="submit" className="btn-logout">
+              <SquareArrowRightExit width={14} height={14} />
+              <span>Keluar</span>
+            </button>
+          </form>
+        </div>
       </div>
-
-      <div className="sticky inset-x-0 bottom-0 border-t bg-white dark:bg-neutral-950 p-2 border-gray-200 dark:border-white/5 transition-colors duration-300">
-        {/* Handle Logout */}
-        <form onSubmit={handleLogout}>
-          <button
-            type="submit"
-            className="group relative flex w-full h-10 items-center gap-2 justify-center rounded-lg px-2 py-1.5 text-sm bg-black dark:bg-white text-white dark:text-black cursor-pointer hover:bg-black/70 dark:hover:bg-white/70 hover:text-white dark:hover:text-black transition-all"
-          >
-            <SquareArrowRightExit width={16} height={16} />
-
-            <span className="text-sm font-bold">Keluar</span>
-          </button>
-        </form>
-      </div>
-    </div>
+    </>
   );
 }
