@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "cloudinary": "^2.10.0",
+    "cors": "^2.8.6",
     "jose": "^6.2.4",
     "lucide-react": "^1.26.0",
     "mongodb": "^7.5.0",
