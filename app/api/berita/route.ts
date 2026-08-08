@@ -2,7 +2,7 @@ import clientPromise from "@/app/lib/mongodb";
 import z from "zod";
 import { v2 as cloudinary } from "cloudinary";
 import { NextResponse } from "next/server";
-import { title } from "process";
+import { getCorsHeaders } from "@/app/lib/cors";
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -11,6 +11,8 @@ cloudinary.config({
 });
 
 export async function POST(request: Request) {
+  const origin = request.headers.get("origin");
+  const corsHeaders = getCorsHeaders(origin);
   try {
     const formData = await request.formData();
     const imageFile = formData.get("image") as File | null;
@@ -158,7 +160,7 @@ export async function POST(request: Request) {
       },
     });
 
-    return Response.json({ success: true, data: result });
+    return Response.json({ success: true, data: result, headers: corsHeaders });
   } catch (error) {
     console.error("Error adding news:", error);
     return Response.json({ success: false, error: "Failed to add news" });
@@ -166,6 +168,8 @@ export async function POST(request: Request) {
 }
 
 export async function GET(request: Request) {
+  const origin = request.headers.get("origin");
+  const corsHeaders = getCorsHeaders(origin);
   try {
     const client = await clientPromise;
     const db = client.db(process.env.MONGODB_DATABASE);
@@ -213,6 +217,7 @@ export async function GET(request: Request) {
         total,
         totalPages: Math.ceil(total / limit),
       },
+      headers: corsHeaders
     }, { status: 200 });
 
   } catch (error) {
