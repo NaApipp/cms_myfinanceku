@@ -160,7 +160,7 @@ export async function POST(request: Request) {
       },
     });
 
-    return Response.json({ success: true, data: result, headers: corsHeaders });
+    return Response.json({ success: true, data: result}, {headers: corsHeaders});
   } catch (error) {
     console.error("Error adding news:", error);
     return Response.json({ success: false, error: "Failed to add news" });
@@ -217,8 +217,7 @@ export async function GET(request: Request) {
         total,
         totalPages: Math.ceil(total / limit),
       },
-      headers: corsHeaders
-    }, { status: 200 });
+    }, { status: 200, headers: corsHeaders });
 
   } catch (error) {
     console.error("Error getting news:", error);
